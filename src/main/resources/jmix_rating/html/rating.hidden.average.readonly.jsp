@@ -12,10 +12,9 @@
     <c:set var="avg" value="0.0"/>
 </c:if>
 <template:addResources type="css" resources="uni-form.css,ui.stars.css"/>
-<template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js"/>
+<template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js,ui.stars.js"/>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#avg${id}").children().not(":input").hide();
         // Create stars for: Average rating
         $("#avg${id}").stars();
     });
