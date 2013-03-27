@@ -16,11 +16,11 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // Create stars for: Average rating
-        $("#avg${id}").stars();
+        $(".avg${id}").stars();
     });
 </script>
 <div style="display:none;">${fn:substring(avg,0,3)}</div>
-<form id="avg${id}" action="">
+<form class="avg${id}" action="">
     <input type="radio" name="rate_avg" value="1" title="Poor"
            disabled="disabled"
            <c:if test="${avg >= 1.0}">checked="checked"</c:if> />
