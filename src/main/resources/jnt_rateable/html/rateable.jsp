@@ -67,6 +67,10 @@
                         $("#all_avg${id}").text(('' + result.j_sumOfVotes / result.j_nbOfVotes).substring(0, 3));
                         <%-- Display confirmation message to the user --%>
                         $("#messages${id}").html("<br/><fmt:message key="label.ratingSaved"/> (" + value + "). <fmt:message key="label.thanks"/>!").stop().css("opacity", 1).fadeIn(30);
+                        <%--set higher cookie timeout (1 year) --%>
+												var exdate=new Date();
+												exdate.setDate(exdate.getDate() + 365);
+                        document.cookie = "rated${bindedComponent.identifier}=${currentNode.identifier}; expires="+exdate.toUTCString()+"; path=/;";                          
                         <%-- Hide confirmation message and enable stars for "Rate this" control, after 2 sec... --%>
                         setTimeout(function() {
                             $("#messages${id}").fadeOut(1000, function() {
