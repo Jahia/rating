@@ -95,7 +95,7 @@
         <span>(<span id="all_votes${id}">${nbVotes.long}</span> <fmt:message key="label.votes"/>; <span
                 id="all_avg${id}">${fn:substring(avg,0,3)}</span>)</span>
 
-            <form id="avg${id}" style="width: 200px" action="">
+            <form id="avg${id}" style="width: 200px">
                 <input type="radio" name="rate_avg" value="1" title="Poor"
                            disabled="disabled" ${avg >= 1.0 ? 'checked="checked"' : ''}/>
                 <input type="radio" name="rate_avg" value="2" title="Fair"
@@ -149,7 +149,7 @@
         <span>(<span id="all_votes${id}">${nbVotes.long}</span> <fmt:message key="label.votes"/>; <span
                 id="all_avg${id}">${fn:substring(avg,0,3)}</span>)</span>
 
-                <form id="avg${id}" style="width: 200px" action="">
+                <form id="avg${id}" style="width: 200px">
                     <input type="radio" name="rate_avg" value="1" title="Poor"
                            disabled="disabled" ${avg >= 1.0 ? 'checked="checked"' : ''}/>
                     <input type="radio" name="rate_avg" value="2" title="Fair"

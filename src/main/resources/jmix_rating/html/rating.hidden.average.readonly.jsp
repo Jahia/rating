@@ -20,7 +20,7 @@
     });
 </script>
 <div style="display:none;">${fn:substring(avg,0,3)}</div>
-<form class="avg${id}" action="">
+<form class="avg${id}">
     <input type="radio" name="rate_avg" value="1" title="Poor"
            disabled="disabled"
            <c:if test="${avg >= 1.0}">checked="checked"</c:if> />
