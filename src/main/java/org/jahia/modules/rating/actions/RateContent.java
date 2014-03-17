@@ -51,10 +51,12 @@ import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
 import org.jahia.services.render.URLResolver;
 import org.json.JSONException;
+import org.slf4j.Logger;
 
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +68,8 @@ import java.util.Map;
  */
 public class RateContent extends Action {
     JCRTemplate jcrTemplate;
-
+    private static Logger logger = org.slf4j.LoggerFactory.getLogger(RateContent.class);
+    
     public void setJcrTemplate(JCRTemplate jcrTemplate) {
         this.jcrTemplate = jcrTemplate;
     }
@@ -89,9 +92,9 @@ public class RateContent extends Action {
                 try {
                     return new ActionResult(HttpServletResponse.SC_OK, node.getPath(), Render.serializeNodeToJSON(node));
                 } catch (IOException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    logger.error("Error while creating rating action result", e);
                 } catch (JSONException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    logger.error("Error while creating rating action result", e);
                 }
                 return null;
             }
