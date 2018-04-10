@@ -14,7 +14,7 @@
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <%--@elvariable id="acl" type="java.lang.String"--%>
 <c:set var="cookieName" value="rated${currentNode.identifier}"/>
-<c:if test="${renderContext.loggedIn and (empty cookie[cookieName])}">
+<c:if test="${renderContext.loggedIn and (empty cookie[cookieName]) and renderContext.readOnlyStatus != 'OFF'}">
     <form action="<c:url value='${url.base}${currentNode.path}'/>.rate.do" method="post"
           id="jahia-forum-post-vote-${currentNode.identifier}">
         <input type="hidden" name="jcrRedirectTo" value="<c:url value='${url.base}${renderContext.mainResource.node.path}'/>"/>
