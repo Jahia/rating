@@ -35,7 +35,7 @@
 <c:set var="cookieName" value="rated${currentNode.identifier}"/>
 <c:choose>
 
-    <c:when test="${renderContext.loggedIn and (empty cookie[cookieName]) and renderContext.readOnlyStatus != 'OFF'}">
+    <c:when test="${renderContext.loggedIn and (empty cookie[cookieName]) and renderContext.readOnlyStatus == 'OFF'}">
     <div class="voteblock">
 
         <a class="positiveVote" title="Vote +1" href="#"
@@ -48,7 +48,7 @@
                 value="${negativeVote}" pattern="##"/>  Bad)</span></span></a>
     </div>
     </c:when>
-    <c:when test="${renderContext.loggedIn and (not empty cookie[cookieName]) and renderContext.readOnlyStatus != 'OFF'}">
+    <c:when test="${renderContext.loggedIn and (not empty cookie[cookieName]) and renderContext.readOnlyStatus == 'OFF'}">
     <div class="voteblock">
         <div class="positiveVote" title="You have already vote"><span><fmt:formatNumber value="${positiveVote}" pattern="##"/><span class="voteText"> (<fmt:formatNumber value="${positiveVote}" pattern="##"/> Good)</span></span></div>
         <div class="negativeVote" title="You have already vote"><span><fmt:formatNumber value="${negativeVote}" pattern="##"/><span class="voteText"> (<fmt:formatNumber value="${negativeVote}" pattern="##"/>  Bad)</span></span></div>

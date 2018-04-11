@@ -5,7 +5,7 @@
 <%@ taglib prefix="template" uri="http://www.jahia.org/tags/templateLib" %>
 <c:set var="cookieName" value="rated${currentNode.identifier}"/>
 <c:choose>
-    <c:when test="${renderContext.loggedIn and (empty cookie[cookieName]) and renderContext.readOnlyStatus != 'OFF'}">
+    <c:when test="${renderContext.loggedIn and (empty cookie[cookieName]) and renderContext.readOnlyStatus == 'OFF'}">
         <jcr:nodeProperty node="${currentNode}" name="j:nbOfVotes" var="nbVotes"/>
         <jcr:nodeProperty node="${currentNode}" name="j:sumOfVotes" var="sumVotes"/>
         <c:set var="id" value="${currentNode.identifier}"/>
