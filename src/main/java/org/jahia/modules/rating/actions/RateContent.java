@@ -92,6 +92,9 @@ public class RateContent extends Action {
                 node.setProperty("j:nbOfVotes",node.getProperty("j:nbOfVotes").getLong()+1);
                 node.setProperty("j:sumOfVotes",node.getProperty("j:sumOfVotes").getLong()+ Long.valueOf(values.get(0)));
                 session.save();
+
+                node.setProperty("j:topRatedRatio", node.getProperty("j:sumOfVotes").getLong()/node.getProperty("j:nbOfVotes").getLong());
+                session.save();
                 try {
                     return new ActionResult(HttpServletResponse.SC_OK, node.getPath(), Render.serializeNodeToJSON(node));
                 } catch (IOException e) {

@@ -4,6 +4,7 @@
 [jmix:rating] mixin
  - j:nbOfVotes (long) = 0  autocreated hidden onconflict=sum
  - j:sumOfVotes (long) = 0 autocreated hidden onconflict=sum
+ - j:topRatedRatio (long) = 0 autocreated hidden onconflict=sum
  - j:lastVote (long) hidden onconflict=latest
  - j:type (string,choicelist[resourceBundle]) = 'average' indexed=no < 'average','plusminus'
 

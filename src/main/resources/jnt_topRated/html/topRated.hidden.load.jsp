@@ -16,9 +16,10 @@
 <%--@elvariable id="acl" type="java.lang.String"--%>
 
 <query:definition var="listQuery"
-         statement="select * from [jmix:rating] as rating inner join [${currentNode.properties['j:typeOfContent'].string}] as rated on issamenode(rating,rated)
-             where rating.[j:nbOfVotes] > ${currentNode.properties['j:minNbOfVotes'].long}
-             order by rating.[j:sumOfVotes] desc"/>
+                  statement="select * from [jmix:rating] as rating where ISDESCENDANTNODE('${renderContext.site.path}') and
+                  rating.[j:nbOfVotes] > ${currentNode.properties['j:minNbOfVotes'].long} and
+                  rating.[jcr:primaryType]='${currentNode.properties['j:typeOfContent'].string}'
+                  order by rating.[j:topRatedRatio] desc"/>
 <c:set target="${moduleMap}" property="editable" value="false" />
 <c:set target="${moduleMap}" property="listQuery" value="${listQuery}" />
 
