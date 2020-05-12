@@ -54,6 +54,8 @@ import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
 import org.jahia.services.render.URLResolver;
 import org.json.JSONException;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 
 import javax.jcr.RepositoryException;
@@ -65,21 +67,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * User: rincevent
- * Date: 9/14/11   ;
- * Time: 2:15 PM
+ * @author rincevent
  */
+@Component(service = Action.class, immediate = true)
 public class RateContent extends Action {
-    JCRTemplate jcrTemplate;
     private static Logger logger = org.slf4j.LoggerFactory.getLogger(RateContent.class);
-    
-    public void setJcrTemplate(JCRTemplate jcrTemplate) {
-        this.jcrTemplate = jcrTemplate;
+
+    private JCRTemplate jcrTemplate;
+
+    public RateContent() {
+        setName("rate");
     }
 
     @Override
-    public ActionResult doExecute(HttpServletRequest req, RenderContext renderContext, final Resource resource, JCRSessionWrapper session, final Map<String, List<String>> parameters, URLResolver urlResolver) throws Exception {
-        return (ActionResult) jcrTemplate.doExecuteWithSystemSession(null,session.getWorkspace().getName(),session.getLocale(),new JCRCallback<Object>() {
+    public ActionResult doExecute(HttpServletRequest req, RenderContext renderContext, final Resource resource,
+                                  JCRSessionWrapper session, final Map<String, List<String>> parameters,
+                                  URLResolver urlResolver) throws Exception {
+        return (ActionResult) jcrTemplate.doExecuteWithSystemSession(null, session.getWorkspace().getName(), session.getLocale(), new JCRCallback<Object>() {
             public Object doInJCR(JCRSessionWrapper session) throws RepositoryException {
                 JCRNodeWrapper node = session.getNodeByUUID(resource.getNode().getIdentifier());
                 if (!node.isNodeType("jmix:rating")) {
@@ -87,11 +91,13 @@ public class RateContent extends Action {
                     node.addMixin("jmix:rating");
                     session.save();
                 }
+
                 List<String> values = parameters.get("j:lastVote");
                 node.setProperty("j:lastVote", values.get(0));
-                node.setProperty("j:nbOfVotes",node.getProperty("j:nbOfVotes").getLong()+1);
-                node.setProperty("j:sumOfVotes",node.getProperty("j:sumOfVotes").getLong()+ Long.valueOf(values.get(0)));
+                node.setProperty("j:nbOfVotes", node.getProperty("j:nbOfVotes").getLong() + 1);
+                node.setProperty("j:sumOfVotes", node.getProperty("j:sumOfVotes").getLong() + Long.valueOf(values.get(0)));
                 node.setProperty("j:topRatedRatio", node.getProperty("j:sumOfVotes").getDouble()/node.getProperty("j:nbOfVotes").getDouble());
+
                 session.save();
                 try {
                     return new ActionResult(HttpServletResponse.SC_OK, node.getPath(), Render.serializeNodeToJSON(node));
@@ -103,5 +109,10 @@ public class RateContent extends Action {
                 return null;
             }
         });
+    }
+
+    @Reference
+    public void setJcrTemplate(JCRTemplate jcrTemplate) {
+        this.jcrTemplate = jcrTemplate;
     }
 }
