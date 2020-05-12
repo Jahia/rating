@@ -44,42 +44,60 @@
         please contact the sales department at sales@jahia.com.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.jahia.modules</groupId>
-    <artifactId>jahia-modules</artifactId>
-    <version>8.0.0.0</version>
-  </parent>
-  <artifactId>rating</artifactId>
-  <version>3.1.0-SNAPSHOT</version>
-  <packaging>bundle</packaging>
-  <name>Jahia Rating</name>
-  <description>These are the custom module (Jahia Rating) for running on a Jahia server.</description>
-  <scm>
-    <connection>scm:git:git@github.com:Jahia/rating.git</connection>
-    <developerConnection>scm:git:git@github.com:Jahia/rating.git</developerConnection>
-    <url>scm:git:git@github.com:Jahia/rating.git</url>
-    <tag>HEAD</tag>
-  </scm>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <properties>
-    <require-capability>osgi.extender;filter:="(osgi.extender=org.jahia.bundles.blueprint.extender.config)"</require-capability>
-    <jahia-module-signature>MCwCFD6jd3qKdA9owFjsYLgRj0Dsc4BdAhRCmT6PPwsdJGfv709dIyUij4YzYw==</jahia-module-signature>
-  </properties>
+    <parent>
+        <groupId>org.jahia.modules</groupId>
+        <artifactId>jahia-modules</artifactId>
+        <version>8.0.0.0</version>
+    </parent>
 
-  <repositories>
-    <repository>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>jahia-public</id>
-      <name>Jahia Public Repository</name>
-      <url>https://devtools.jahia.com/nexus/content/groups/public</url>
-    </repository>
-  </repositories>
+    <artifactId>rating</artifactId>
+    <version>3.1.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+    <name>Jahia Rating</name>
+    <description>These are the custom module (Jahia Rating) for running on a Jahia server.</description>
+
+    <scm>
+        <connection>scm:git:git@github.com:Jahia/rating.git</connection>
+        <developerConnection>scm:git:git@github.com:Jahia/rating.git</developerConnection>
+        <url>scm:git:git@github.com:Jahia/rating.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <jahia-module-signature>MC0CFQCN9gJmKmH1L5UHsCFLE2JjXg/lSQIUas9k2/W2lGDey2rn4mFPZzSFyfk=</jahia-module-signature>
+    </properties>
+
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>jahia-public</id>
+            <name>Jahia Public Repository</name>
+            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <_dsannotations>*</_dsannotations>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
