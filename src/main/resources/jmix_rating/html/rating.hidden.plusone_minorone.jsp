@@ -47,10 +47,10 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 document.getElementById("positiveVote_${currentNode.identifier}").addEventListener("click", function(e) {
-                    document.getElementById("jahia-forum-post-vote-" + e.target.id.replace("positiveVote_", "")).submit();
+                    document.getElementById("jahia-forum-post-vote-" + e.currentTarget.id.replace("positiveVote_", "")).submit();
                 });
                 document.getElementById("negativeVote_${currentNode.identifier}").addEventListener("click", function(e) {
-                    var voteForm = document.getElementById("jahia-forum-post-vote-" + e.target.id.replace("negativeVote_", ""));
+                    var voteForm = document.getElementById("jahia-forum-post-vote-" + e.currentTarget.id.replace("negativeVote_", ""));
                     voteForm.elements['j:lastVote'].value='-1';
                     voteForm.submit();
                 })
