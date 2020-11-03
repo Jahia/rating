@@ -37,15 +37,25 @@
 
     <c:when test="${renderContext.loggedIn and (empty cookie[cookieName]) and renderContext.readOnlyStatus == 'OFF'}">
     <div class="voteblock">
-
-        <a class="positiveVote" title="Vote +1" href="#"
-           onclick="document.getElementById('jahia-forum-post-vote-${currentNode.identifier}').submit();"><span><fmt:formatNumber
+        <a class="positiveVote" title="Vote +1" href="#" id="positiveVote_${currentNode.identifier}"><span><fmt:formatNumber
                 value="${positiveVote}" pattern="##"/><span class="voteText"> (<fmt:formatNumber
                 value="${positiveVote}" pattern="##"/> Good)</span></span></a>
-        <a class="negativeVote" title="Vote -1" href="#"
-           onclick="var voteForm=document.getElementById('jahia-forum-post-vote-${currentNode.identifier}'); voteForm.elements['j:lastVote'].value='-1'; voteForm.submit();"><span><fmt:formatNumber
+        <a class="negativeVote" title="Vote -1" href="#" id="negativeVote_${currentNode.identifier}"><span><fmt:formatNumber
                 value="${negativeVote}" pattern="##"/><span class="voteText"> (<fmt:formatNumber
                 value="${negativeVote}" pattern="##"/>  Bad)</span></span></a>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                document.getElementById("positiveVote_${currentNode.identifier}").addEventListener("click", function(e) {
+                    document.getElementById("jahia-forum-post-vote-" + e.currentTarget.id.replace("positiveVote_", "")).submit();
+                });
+                document.getElementById("negativeVote_${currentNode.identifier}").addEventListener("click", function(e) {
+                    var voteForm = document.getElementById("jahia-forum-post-vote-" + e.currentTarget.id.replace("negativeVote_", ""));
+                    voteForm.elements['j:lastVote'].value='-1';
+                    voteForm.submit();
+                })
+            });
+        </script>
     </div>
     </c:when>
     <c:when test="${renderContext.loggedIn and (not empty cookie[cookieName]) and renderContext.readOnlyStatus == 'OFF'}">
