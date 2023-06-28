@@ -58,7 +58,7 @@
                     <%-- Send request to the server using POST method --%>
                     $.post("<c:url value='${url.base}${bindedComponent.path}'/>.rate.do", {'j:lastVote': value,'jcrMethodToCall':"post",
                         'jcrCookieName':"rated${bindedComponent.identifier}",
-                        'jcrCookieValue':"${currentNode.identifier}"}, function(
+                        'jcrCookieValue':"${bindedComponent.identifier}"}, function(
                             result) {
                         <%-- Select stars from "Average rating" control to match the returned average rating value --%>
                         $("#avg${id}").stars("select", Math.round(result.j_sumOfVotes / result.j_nbOfVotes));
@@ -70,7 +70,7 @@
                         <%--set higher cookie timeout (1 year) --%>
 												var exdate=new Date();
 												exdate.setDate(exdate.getDate() + 365);
-                        document.cookie = "rated${bindedComponent.identifier}=${currentNode.identifier}; expires="+exdate.toUTCString()+"; path=/;";                          
+                        document.cookie = "rated${bindedComponent.identifier}=${bindedComponent.identifier}; expires="+exdate.toUTCString()+"; path=/;";
                         <%-- Hide confirmation message and enable stars for "Rate this" control, after 2 sec... --%>
                         setTimeout(function() {
                             $("#messages${id}").fadeOut(1000, function() {
@@ -121,7 +121,7 @@
                 <input type="submit" value="<fmt:message key="label.rateThis.rateIt"/>"/>
             </form>
         </div>
-        
+
     </div>
     </c:when>
     <c:otherwise>
