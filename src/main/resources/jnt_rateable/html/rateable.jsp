@@ -70,7 +70,7 @@
                         <%--set higher cookie timeout (1 year) --%>
 												var exdate=new Date();
 												exdate.setDate(exdate.getDate() + 365);
-                        document.cookie = "rated${bindedComponent.identifier}=${currentNode.identifier}; expires="+exdate.toUTCString()+"; path=/;";
+                        document.cookie = "rated${bindedComponent.identifier}=${bindedComponent.identifier}; expires="+exdate.toUTCString()+"; path=/;";
                         <%-- Hide confirmation message and enable stars for "Rate this" control, after 2 sec... --%>
                         setTimeout(function() {
                             $("#messages${id}").fadeOut(1000, function() {
