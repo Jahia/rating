@@ -14,6 +14,7 @@
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <%--@elvariable id="acl" type="java.lang.String"--%>
 <template:addResources type="css" resources="rating-plusone-minorone.css"/>
+<template:addResources type="javascript" resources="apps/rating.bundle.js"/>
 <jcr:nodeProperty node="${currentNode}" name="j:nbOfVotes" var="nbVotes"/>
 <jcr:nodeProperty node="${currentNode}" name="j:sumOfVotes" var="sumVotes"/>
 <c:set var="positiveVote" value="0"/>
@@ -45,16 +46,7 @@
                 value="${negativeVote}" pattern="##"/>  Bad)</span></span></a>
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                document.getElementById("positiveVote_${currentNode.identifier}").addEventListener("click", function(e) {
-                    document.getElementById("jahia-forum-post-vote-" + e.currentTarget.id.replace("positiveVote_", "")).submit();
-                });
-                document.getElementById("negativeVote_${currentNode.identifier}").addEventListener("click", function(e) {
-                    var voteForm = document.getElementById("jahia-forum-post-vote-" + e.currentTarget.id.replace("negativeVote_", ""));
-                    voteForm.elements['j:lastVote'].value='-1';
-                    voteForm.submit();
-                })
-            });
+            RatingLibrary.initPlusOne('${currentNode.identifier}');
         </script>
     </div>
     </c:when>

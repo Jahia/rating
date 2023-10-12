@@ -15,7 +15,7 @@
  *	jquery.ui.widget.js
  *
  */
-(function($) {
+export const stars = function($) {
 
 $.widget('ui.stars', {
 	options: {
@@ -313,4 +313,4 @@ $.extend($.ui.stars, {
 	version: '3.0.1'
 });
 
-})(jQuery);
+};
