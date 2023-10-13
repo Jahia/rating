@@ -1,7 +1,6 @@
+import $ from 'jquery';
 import 'jquery-ui';
-import {initStars} from "./lib/ui.stars";
-
-initStars($);
+import "./lib/ui.stars";
 
 export function init(currentNodeId) {
     $(document).ready(function() {
@@ -61,6 +60,7 @@ export function initRating(url, currentNodeId) {
     });
 }
 export function initRateable(params) {
+    console.log('init')
     $(document).ready(function() {
         jQuery.ajaxSettings.traditional = true;
 

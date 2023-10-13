@@ -6,7 +6,8 @@ const packageJson = require('./package.json');
 module.exports = (env, argv) => {
     const appsFolder = 'src/main/resources/javascript/apps';
     return {
-        mode: argv.mode ? argv.mode : 'development',
+        //mode: argv.mode ? argv.mode : 'development',
+        mode: 'development',
         entry: {
             main: path.resolve(__dirname, 'src/javascript/index')
         },
