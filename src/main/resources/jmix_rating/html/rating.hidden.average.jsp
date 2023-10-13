@@ -16,60 +16,12 @@
             <c:set var="avg" value="0.0"/>
         </c:if>
         <template:addResources type="css" resources="uni-form.css,ui.stars.css"/>
-        <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js,ui.stars.js"/>
+        <template:addResources type="javascript" resources="apps/rating.bundle.js"/>
         <script type="text/javascript">
-            $(document).ready(function() {
-                $("#avg${id}").children().not(":input").hide();
-                $("#rat${id}").children().not("select").hide();
-
-                // Create stars for: Average rating
-                $("#avg${id}").stars();
-
-                // Create stars for: Rate this
-                $("#rat${id}").stars({
-                    inputType: "select",
-                    cancelShow: false,
-                    captionEl: $("#caption${id}"),
-                    callback: function(ui, type, value) {
-                        // Disable Stars while AJAX connection is active
-                        ui.disable();
-
-                        // Display message to the user at the begining of request
-                        $("#messages${id}").text("Saving...").stop().css("opacity", 1).fadeIn(30);
-
-                        // Send request to the server using POST method
-                        $.post("<c:url value='${url.base}${currentNode.path}'/>.rate.do",
-                        {'j:lastVote': value,'jcrMethodToCall':"post",'jcrCookieName':"rated${currentNode.identifier}",'jcrCookieValue':"${currentNode.identifier}"},
-                                function(result) {
-                                    // Select stars from "Average rating" control to match the returned average rating value
-                                    $("#avg${id}").stars("select",
-                                            Math.round(result.j_sumOfVotes / result.j_nbOfVotes));
-                                    // Update other text controls...
-                                    $("#all_votes${id}").text(result.j_nbOfVotes);
-                                    $("#all_avg${id}").text(('' + result.j_sumOfVotes / result.j_nbOfVotes).substring(0,
-                                            3));
-                                    // Display confirmation message to the user
-                                    $("#messages${id}").html("<br/>Rating saved (" + value +
-                                                             "). Thanks!").stop().css("opacity", 1).fadeIn(30);
-                                    // Hide confirmation message and enable stars for "Rate this" control, after 2 sec...
-                                    setTimeout(function() {
-                                        $("#messages${id}").fadeOut(1000, function() {
-                                            ui.enable();
-                                        });
-                                    }, 2000);
-                                }, "json");
-                    }
-                });
-
-                // Since the <option value="3"> was selected by default, we must remove selection from Stars.
-                $("#rat${id}").stars("selectID", -1);
-
-                // Create element to use for confirmation messages
-                $('<div id="messages${id}"/>').appendTo("#rat${id}");
-            });
+            RatingLibrary.initRating('<c:url value='${url.base}${currentNode.path}'/>.rate.do','${currentNode.identifier}', '${currentNode.path}');
         </script>
 
-        <div class="ratings">
+        <div class="ratings" >
 
             <div class="rating-L"><strong><fmt:message key="label.AverageRating"/></strong>
         <span>(<span id="all_votes${id}">${nbVotes.long}</span> votes; <span
