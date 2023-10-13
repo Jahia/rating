@@ -103,7 +103,6 @@ export function initRateable(params) {
         $(`<div id="messages${params.id}"/>`).appendTo(`#rat${params.id}`);
     });
 }
-
 export function initPlusOne(currentNodeId) {
     $(document).ready(function() {
         document.getElementById(`positiveVote_${currentNodeId}`).addEventListener("click", function(e) {
