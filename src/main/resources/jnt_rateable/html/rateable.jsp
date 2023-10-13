@@ -16,7 +16,6 @@
 <%--@elvariable id="acl" type="java.lang.String"--%>
 <c:set var="bindedComponent"
        value="${uiComponents:getBindedComponent(currentNode, renderContext, 'j:bindedComponent')}"/>
-
 <c:if test="${not empty bindedComponent}">
     <c:set var="cookieName" value="rated${bindedComponent.identifier}"/>
 <c:choose>

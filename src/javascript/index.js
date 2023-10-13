@@ -1,8 +1,7 @@
-import $ from 'jquery';
 import 'jquery-ui';
-import {stars} from './lib/ui.stars';
+import {initStars} from "./lib/ui.stars";
 
-stars($);
+initStars($);
 
 export function init(currentNodeId) {
     $(document).ready(function() {

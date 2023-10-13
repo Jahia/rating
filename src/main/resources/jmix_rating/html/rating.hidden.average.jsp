@@ -21,7 +21,7 @@
             RatingLibrary.initRating('<c:url value='${url.base}${currentNode.path}'/>.rate.do','${currentNode.identifier}', '${currentNode.path}');
         </script>
 
-        <div class="ratings">
+        <div class="ratings" >
 
             <div class="rating-L"><strong><fmt:message key="label.AverageRating"/></strong>
         <span>(<span id="all_votes${id}">${nbVotes.long}</span> votes; <span

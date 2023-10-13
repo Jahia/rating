@@ -5,8 +5,8 @@ const packageJson = require('./package.json');
 
 module.exports = (env, argv) => {
     const appsFolder = 'src/main/resources/javascript/apps';
-    let config = {
-        mode: 'development',
+    return {
+        mode: argv.mode ? argv.mode : 'development',
         entry: {
             main: path.resolve(__dirname, 'src/javascript/index')
         },
@@ -26,17 +26,6 @@ module.exports = (env, argv) => {
                 cleanOnceBeforeBuildPatterns: [`${path.resolve(__dirname, appsFolder)}/**/*`],
                 verbose: false
             })
-        ],
-        resolve: {
-            alias: {
-                'jquery': 'jquery/src/jquery',
-                'jquery-validation': 'jquery-validation/dist/jquery.validate.js'
-            },
-            modules: [
-                path.resolve(__dirname, 'src/javascript'),
-                path.resolve(__dirname, 'node_modules')
-            ]
-        }
+        ]
     };
-    return config;
 }
