@@ -58,10 +58,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 
-import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -69,9 +67,9 @@ import java.util.Map;
 /**
  * @author rincevent
  */
-@Component(service = Action.class, immediate = true)
+@Component(service = Action.class)
 public class RateContent extends Action {
-    private static Logger logger = org.slf4j.LoggerFactory.getLogger(RateContent.class);
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(RateContent.class);
 
     private JCRTemplate jcrTemplate;
 
@@ -83,31 +81,27 @@ public class RateContent extends Action {
     public ActionResult doExecute(HttpServletRequest req, RenderContext renderContext, final Resource resource,
                                   JCRSessionWrapper session, final Map<String, List<String>> parameters,
                                   URLResolver urlResolver) throws Exception {
-        return (ActionResult) jcrTemplate.doExecuteWithSystemSession(null, session.getWorkspace().getName(), session.getLocale(), new JCRCallback<Object>() {
-            public Object doInJCR(JCRSessionWrapper session) throws RepositoryException {
-                JCRNodeWrapper node = session.getNodeByUUID(resource.getNode().getIdentifier());
-                if (!node.isNodeType("jmix:rating")) {
-                    session.checkout(node);
-                    node.addMixin("jmix:rating");
-                    session.save();
-                }
-
-                List<String> values = parameters.get("j:lastVote");
-                node.setProperty("j:lastVote", values.get(0));
-                node.setProperty("j:nbOfVotes", node.getProperty("j:nbOfVotes").getLong() + 1);
-                node.setProperty("j:sumOfVotes", node.getProperty("j:sumOfVotes").getLong() + Long.valueOf(values.get(0)));
-                node.setProperty("j:topRatedRatio", node.getProperty("j:sumOfVotes").getDouble()/node.getProperty("j:nbOfVotes").getDouble());
-
-                session.save();
-                try {
-                    return new ActionResult(HttpServletResponse.SC_OK, node.getPath(), Render.serializeNodeToJSON(node));
-                } catch (IOException e) {
-                    logger.error("Error while creating rating action result", e);
-                } catch (JSONException e) {
-                    logger.error("Error while creating rating action result", e);
-                }
-                return null;
+        return (ActionResult) jcrTemplate.doExecuteWithSystemSessionAsUser(null, session.getWorkspace().getName(), session.getLocale(), (JCRCallback<Object>) systemSession -> {
+            JCRNodeWrapper node = systemSession.getNodeByUUID(resource.getNode().getIdentifier());
+            if (!node.isNodeType("jmix:rating")) {
+                systemSession.checkout(node);
+                node.addMixin("jmix:rating");
+                systemSession.save();
             }
+
+            List<String> values = parameters.get("j:lastVote");
+            node.setProperty("j:lastVote", values.get(0));
+            node.setProperty("j:nbOfVotes", node.getProperty("j:nbOfVotes").getLong() + 1);
+            node.setProperty("j:sumOfVotes", node.getProperty("j:sumOfVotes").getLong() + Long.parseLong(values.get(0)));
+            node.setProperty("j:topRatedRatio", node.getProperty("j:sumOfVotes").getDouble()/node.getProperty("j:nbOfVotes").getDouble());
+
+            systemSession.save();
+            try {
+                return new ActionResult(HttpServletResponse.SC_OK, node.getPath(), Render.serializeNodeToJSON(node));
+            } catch (IOException | JSONException e) {
+                logger.error("Error while creating rating action result", e);
+            }
+            return null;
         });
     }
 
