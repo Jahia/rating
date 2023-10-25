@@ -18,6 +18,7 @@
         <template:addResources type="css" resources="uni-form.css,ui.stars.css"/>
         <template:addResources type="javascript" resources="apps/rating.bundle.js"/>
         <script type="text/javascript">
+            console.log('average ...')
             RatingLibrary.initRating('<c:url value='${url.base}${currentNode.path}'/>.rate.do','${currentNode.identifier}', '${currentNode.path}');
         </script>
 
@@ -65,6 +66,10 @@
             </div>
 
         </div>
+        <script src="<c:url value='/modules/rating/javascript/apps/rating.bundle.js'/>"></script>
+        <script type="text/javascript">
+            RatingLibrary.initRating('<c:url value='${url.base}${currentNode.path}'/>.rate.do','${currentNode.identifier}', '${currentNode.path}');
+        </script>
     </c:when>
     <c:otherwise>
         <%@include file="rating.hidden.average.readonly.jsp" %>

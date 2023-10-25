@@ -29,21 +29,6 @@
     <c:if test="${nbVotes.long == 0}">
         <c:set var="avg" value="0.0"/>
     </c:if>
-    <template:addResources type="css" resources="uni-form.css,ui.stars.css"/>
-    <template:addResources type="javascript" resources="apps/rating.bundle.js"/>
-    <script type="text/javascript">
-        <fmt:message key="label.saving" var="i18nSaving"/>
-        <fmt:message key="label.ratingSaved" var="ratingSaved"/>
-        <fmt:message key="label.thanks" var="thanks"/>
-        var params = {
-            i18nSaving: "${functions:escapeJavaScript(i18nSaving)}",
-            url: "<c:url value='${url.base}${bindedComponent.path}'/>.rate.do",
-            id: "${id}",
-            ratingSaved: "${ratingSaved}",
-            thanks: "${thanks}"
-        }
-        RatingLibrary.initRateable(params);
-    </script>
 
     <div class="ratings">
 
@@ -113,5 +98,21 @@
 
     </c:otherwise>
     </c:choose>
+
+    <script src="<c:url value='/modules/rating/javascript/apps/rating.bundle.js'/>"></script>
+
+    <script type="text/javascript">
+        <fmt:message key="label.saving" var="i18nSaving"/>
+        <fmt:message key="label.ratingSaved" var="ratingSaved"/>
+        <fmt:message key="label.thanks" var="thanks"/>
+        var params = {
+            i18nSaving: "${functions:escapeJavaScript(i18nSaving)}",
+            url: "<c:url value='${url.base}${bindedComponent.path}'/>.rate.do",
+            id: "${id}",
+            ratingSaved: "${ratingSaved}",
+            thanks: "${thanks}"
+        }
+        RatingLibrary.initRateable(params);
+    </script>
 </c:if>
 

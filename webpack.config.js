@@ -15,6 +15,14 @@ module.exports = (env, argv) => {
             filename: `${packageJson.name}.bundle.js`,
             library: 'RatingLibrary'
         },
+        module: {
+            rules: [
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader","css-loader"],
+                }
+            ]
+        },
         plugins: [
             new ProvidePlugin({
                 'window.jQuery': 'jquery',

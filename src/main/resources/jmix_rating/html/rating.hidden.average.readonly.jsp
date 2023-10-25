@@ -11,11 +11,6 @@
 <c:if test="${nbVotes.long == 0}">
     <c:set var="avg" value="0.0"/>
 </c:if>
-<template:addResources type="css" resources="uni-form.css,ui.stars.css"/>
-<template:addResources type="javascript" resources="apps/rating.bundle.js"/>
-<script type="text/javascript">
-    RatingLibrary.init('${id}');
-</script>
 <div style="display:none;">${fn:substring(avg,0,3)}</div>
 <form class="avg${id}">
     <input type="radio" name="rate_avg" value="1" title="Poor"
@@ -34,3 +29,8 @@
            disabled="disabled"
            <c:if test="${avg >= 5.0}">checked="checked"</c:if> />
 </form>
+
+<script src="<c:url value='/modules/rating/javascript/apps/rating.bundle.js'/>"></script>
+<script type="text/javascript">
+    RatingLibrary.init('${id}');
+</script>
