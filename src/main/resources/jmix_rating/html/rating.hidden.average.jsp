@@ -15,13 +15,6 @@
         <c:if test="${nbVotes.long == 0}">
             <c:set var="avg" value="0.0"/>
         </c:if>
-        <template:addResources type="css" resources="uni-form.css,ui.stars.css"/>
-        <template:addResources type="javascript" resources="apps/rating.bundle.js"/>
-        <script type="text/javascript">
-            console.log('average ...')
-            RatingLibrary.initRating('<c:url value='${url.base}${currentNode.path}'/>.rate.do','${currentNode.identifier}', '${currentNode.path}');
-        </script>
-
         <div class="ratings" >
 
             <div class="rating-L"><strong><fmt:message key="label.AverageRating"/></strong>
