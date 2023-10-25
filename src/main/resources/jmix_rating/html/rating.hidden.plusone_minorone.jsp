@@ -13,8 +13,6 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <%--@elvariable id="acl" type="java.lang.String"--%>
-<template:addResources type="css" resources="rating-plusone-minorone.css"/>
-<template:addResources type="javascript" resources="apps/rating.bundle.js"/>
 <jcr:nodeProperty node="${currentNode}" name="j:nbOfVotes" var="nbVotes"/>
 <jcr:nodeProperty node="${currentNode}" name="j:sumOfVotes" var="sumVotes"/>
 <c:set var="positiveVote" value="0"/>
@@ -44,11 +42,12 @@
         <a class="negativeVote" title="Vote -1" href="#" id="negativeVote_${currentNode.identifier}"><span><fmt:formatNumber
                 value="${negativeVote}" pattern="##"/><span class="voteText"> (<fmt:formatNumber
                 value="${negativeVote}" pattern="##"/>  Bad)</span></span></a>
+    </div>
 
+        <script src="<c:url value='/modules/rating/javascript/apps/rating.bundle.js'/>"></script>
         <script type="text/javascript">
             RatingLibrary.initPlusOne('${currentNode.identifier}');
         </script>
-    </div>
     </c:when>
     <c:when test="${renderContext.loggedIn and (not empty cookie[cookieName]) and renderContext.readOnlyStatus == 'OFF'}">
     <div class="voteblock">

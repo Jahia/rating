@@ -1,6 +1,9 @@
 import $ from 'jquery';
 import 'jquery-ui';
 import "./lib/ui.stars";
+import './lib/css/ui.stars.css';
+import './lib/css/uni-form.css';
+import './lib/css/rating-plusone-minorone.css';
 
 export function init(currentNodeId) {
     $(document).ready(function() {
