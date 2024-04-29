@@ -11,10 +11,12 @@
     "webpack": "node --max_old_space_size=2048 ./node_modules/webpack/bin/webpack.js",
     "build:analyze": "yarn build --analyze",
     "build:production": "yarn build --mode=production",
-    "build:production-analyze": "yarn build:production --analyze"
+    "build:production-analyze": "yarn build:production --analyze",
+    "sync-pom": "sync-pom-version --use-yarn"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
+    "sync-pom-version-to-package": "^1.6.1",
     "css-loader": "^6.8.1",
     "style-loader": "^3.3.3",
     "webpack": "^5.88.2",
